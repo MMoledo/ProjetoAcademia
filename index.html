@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeto Academia - Mobile</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="brand">Projeto Academia</p>
+      <p class="subtitle">Acompanhe sua evolução no treino</p>
+    </div>
+    <button id="themeToggle" class="ghost-btn" aria-label="Alternar tema">
+      🌓
+    </button>
+  </header>
+
+  <main>
+    <section id="authSection" class="card">
+      <h2>Entrar</h2>
+      <form id="loginForm" class="form-grid">
+        <label> E-mail
+          <input type="email" id="loginEmail" required>
+        </label>
+        <label> Senha
+          <input type="password" id="loginPassword" required>
+        </label>
+        <button type="submit" class="primary">Entrar</button>
+      </form>
+      <details>
+        <summary>Não tem conta? Cadastre-se</summary>
+        <form id="registerForm" class="form-grid">
+          <label> Nome
+            <input type="text" id="registerName" required>
+          </label>
+          <label> E-mail
+            <input type="email" id="registerEmail" required>
+          </label>
+          <label> Senha
+            <input type="password" id="registerPassword" required>
+          </label>
+          <button type="submit" class="secondary">Criar conta</button>
+        </form>
+      </details>
+      <div id="authInfo" class="muted"></div>
+    </section>
+
+    <section id="homeSection" class="card hidden">
+      <div class="section-header">
+        <h2>Visão geral</h2>
+        <button id="logoutBtn" class="ghost-btn">Sair</button>
+      </div>
+      <div class="metrics-grid" id="homeMetrics"></div>
+      <div class="panel">
+        <h3>Próximo treino agendado</h3>
+        <p id="nextWorkoutInfo" class="muted"></p>
+        <button id="goToTodayWorkout" class="primary full">Ir para treino do dia</button>
+      </div>
+      <div class="quick-actions">
+        <button data-target="exercisesSection">Meus exercícios</button>
+        <button data-target="workoutsSection">Meus treinos</button>
+        <button data-target="calendarSection">Calendário</button>
+        <button data-target="historySection">Histórico</button>
+      </div>
+    </section>
+
+    <section id="exercisesSection" class="card hidden">
+      <div class="section-header">
+        <h2>Exercícios</h2>
+        <button id="addExerciseBtn" class="ghost-btn">+ Novo</button>
+      </div>
+      <form id="exerciseForm" class="form-grid">
+        <label> Nome do exercício
+          <input type="text" id="exerciseName" required>
+        </label>
+        <label> Grupo muscular (opcional)
+          <input type="text" id="exerciseGroup">
+        </label>
+        <label> Equipamento
+          <input type="text" id="exerciseEquipment" placeholder="barra, halteres, máquina...">
+        </label>
+        <label> Séries de aquecimento
+          <input type="number" id="exerciseWarmup" min="0" value="0">
+        </label>
+        <label> Séries de preparação
+          <input type="number" id="exercisePrep" min="0" value="0">
+        </label>
+        <label> Séries de trabalho
+          <input type="number" id="exerciseWork" min="1" value="3">
+        </label>
+        <label> Observações
+          <textarea id="exerciseNotes" rows="2" placeholder="Ex.: segurar 1s na fase excêntrica"></textarea>
+        </label>
+        <label> Anexos (URL de foto/vídeo)
+          <input type="url" id="exerciseMedia" placeholder="https://...">
+        </label>
+        <button type="submit" class="primary">Salvar exercício</button>
+      </form>
+      <div id="exerciseList" class="list"></div>
+    </section>
+
+    <section id="workoutsSection" class="card hidden">
+      <div class="section-header">
+        <h2>Treinos</h2>
+        <button id="addWorkoutBtn" class="ghost-btn">+ Novo</button>
+      </div>
+      <form id="workoutForm" class="form-grid">
+        <label> Nome do treino
+          <input type="text" id="workoutName" required>
+        </label>
+        <label> Modelo base (opcional)
+          <select id="workoutTemplate">
+            <option value="">Sem modelo</option>
+          </select>
+        </label>
+        <label> Exercícios (ordem importa)
+          <select id="workoutExercises" multiple size="5"></select>
+        </label>
+        <button type="submit" class="primary">Salvar treino</button>
+      </form>
+      <div id="workoutList" class="list"></div>
+    </section>
+
+    <section id="calendarSection" class="card hidden">
+      <div class="section-header">
+        <h2>Calendário</h2>
+      </div>
+      <form id="scheduleForm" class="form-grid">
+        <label> Treino
+          <select id="scheduleWorkout" required></select>
+        </label>
+        <label> Data
+          <input type="date" id="scheduleDate" required>
+        </label>
+        <button type="submit" class="primary">Agendar</button>
+      </form>
+      <div id="scheduleList" class="list"></div>
+    </section>
+
+    <section id="sessionSection" class="card hidden">
+      <div class="section-header">
+        <h2>Treino do dia</h2>
+        <button id="completeSessionBtn" class="ghost-btn">Concluir treino</button>
+      </div>
+      <div id="sessionContent"></div>
+    </section>
+
+    <section id="historySection" class="card hidden">
+      <div class="section-header">
+        <h2>Histórico</h2>
+      </div>
+      <div id="historyList" class="list"></div>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button data-target="homeSection" class="active">Home</button>
+    <button data-target="exercisesSection">Exercícios</button>
+    <button data-target="workoutsSection">Treinos</button>
+    <button data-target="calendarSection">Calendário</button>
+    <button data-target="historySection">Histórico</button>
+  </nav>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
